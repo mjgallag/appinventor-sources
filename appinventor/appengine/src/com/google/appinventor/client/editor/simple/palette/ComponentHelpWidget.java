@@ -61,7 +61,7 @@ public final class ComponentHelpWidget extends AbstractPaletteItemWidget {
 
       // Create link to more information.  This would be cleaner if
       // GWT supported String.format.
-      String referenceComponentsUrl = Ode.getSystemConfig().getReferenceComponentsUrl();
+      String referenceComponentsUrl = Ode.getSystemConfig().referenceComponentsUrl;
       String url = null;
       int version = -1;
       if (scd.getExternal()) {  // extensions will not have documentation hosted in ai2

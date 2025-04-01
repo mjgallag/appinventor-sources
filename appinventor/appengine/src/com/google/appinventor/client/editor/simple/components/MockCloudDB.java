@@ -58,7 +58,7 @@ public class MockCloudDB extends MockNonVisibleComponent {
     }
 
     changeProperty(PROPERTY_NAME_PROJECT_ID, projectID);
-    String defaultRedisServer = Ode.getInstance().getSystemConfig().getDefaultCloudDBserver();
+    String defaultRedisServer = Ode.getInstance().getSystemConfig().defaultCloudDBserver;
     changeProperty(PROPERTY_NAME_DEFAULT_REDISSERVER, defaultRedisServer);
     getTokenFromServer();       // Get Token from the server
   }

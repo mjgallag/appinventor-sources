@@ -135,7 +135,7 @@ public class TopToolbar extends Composite {
       buildDropDown.removeItemById(WIDGET_NAME_BUILD_ANDROID_AAB2);
     }
     if (!AppInventorFeatures.hasYailGenerationOption()
-        || !Ode.getInstance().getUser().getIsAdmin()) {
+        || !Ode.getInstance().getUser().isAdmin) {
       buildDropDown.removeItemById(WIDGET_NAME_BUILD_YAIL);
     }
     buildDropDown.removeUnneededSeparators();
@@ -148,7 +148,7 @@ public class TopToolbar extends Composite {
       settingsDropDown.setItemHtmlById("DyslexicFont", MESSAGES.enableOpenDyslexic());
       settingsDropDown.setCommandById("DyslexicFont", new SetFontDyslexicAction());
     }
-    if (!Ode.getInstance().getUser().getIsAdmin()) {
+    if (!Ode.getInstance().getUser().isAdmin) {
       adminDropDown.removeFromParent();
     }
   }

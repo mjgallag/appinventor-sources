@@ -159,7 +159,7 @@ public class DesignToolbar extends Toolbar {
       setVisibleItem(removeFormItem, false);
     }
     // Is the Gallery Enabled (new gallery)?
-    setVisibleItem(sendToGalleryItem, Ode.getSystemConfig().getGalleryEnabled()
+    setVisibleItem(sendToGalleryItem, Ode.getSystemConfig().galleryEnabled
         && !Ode.getInstance().getGalleryReadOnly());
 
     // Gray out the Designer button and enable the blocks button

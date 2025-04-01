@@ -36,34 +36,34 @@ public class OpenLinkAction implements Command {
 
     switch (link_name) {
       case "Feedback":
-        url = config.getFeedbackUrl();
+        url = config.feedbackUrl;
         break;
       case WIDGET_NAME_LIBRARY:
-        url = config.getLibraryUrl();
+        url = config.libraryUrl;
         break;
       case WIDGET_NAME_GETSTARTED:
-        url = config.getGetStartedUrl();
+        url = config.getStartedUrl;
         break;
       case WIDGET_NAME_EXTENSIONS:
-        url = config.getExtensionsUrl();
+        url = config.extensionsUrl;
         break;
       case WIDGET_NAME_TUTORIALS:
-        url = config.getTutorialsUrl();
+        url = config.tutorialsUrl;
         break;
       case WIDGET_NAME_TROUBLESHOOTING:
-        url = config.getTroubleshootingUrl();
+        url = config.troubleshootingUrl;
         break;
       case WIDGET_NAME_FORUMS:
-        url = config.getForumsUrl();
+        url = config.forumsUrl;
         break;
       case WIDGET_NAME_FEEDBACK:
-        url = config.getFeedbackUrl();
+        url = config.feedbackUrl;
         break;
       default:
-        url = config.getGuideUrl();
+        url = config.guideUrl;
         break;
     }
-    if (config.getGuideUrl() != null) {
+    if (config.guideUrl != null) {
       Window.open(url, TopPanel.WINDOW_OPEN_LOCATION, TopPanel.WINDOW_OPEN_FEATURES);
     }
   }

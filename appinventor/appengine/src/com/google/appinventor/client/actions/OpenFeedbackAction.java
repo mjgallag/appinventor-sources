@@ -17,8 +17,8 @@ public class OpenFeedbackAction implements Command {
   @Override
   public void execute() {
     Config config = getSystemConfig();
-    if (config.getFeedbackUrl() != null) {
-      Window.open(config.getFeedbackUrl(), TopPanel.WINDOW_OPEN_LOCATION, TopPanel.WINDOW_OPEN_FEATURES);
+    if (config.feedbackUrl != null) {
+      Window.open(config.feedbackUrl, TopPanel.WINDOW_OPEN_LOCATION, TopPanel.WINDOW_OPEN_FEATURES);
     }
   }
 }

@@ -73,7 +73,7 @@ public class MockFirebaseDB extends MockNonVisibleComponent {
   public final void initComponent(Widget widget) {
     super.initComponent(widget);
 
-    String devBucket = Ode.getInstance().getUser().getUserEmail().replace(".", ":") + "";
+    String devBucket = Ode.getInstance().getUser().email.replace(".", ":") + "";
     DesignToolbar.DesignProject currentProject = Ode.getInstance().getDesignToolbar().getCurrentProject();
     String projectName = "";
     if (currentProject != null) {
@@ -95,7 +95,7 @@ public class MockFirebaseDB extends MockNonVisibleComponent {
     // is loaded from the "Flag" module which reads properties from
     // appengine-web.xml (in the App Engine version). The standalone version
     // stores it in appinventor.xml (at least for now)
-    String defaultURL = Ode.getSystemConfig().getFirebaseURL();
+    String defaultURL = Ode.getSystemConfig().firebaseURL;
     changeProperty(PROPERTY_NAME_DEFAULT_URL, defaultURL);
     LOG.info("Default Firebase URL = " + defaultURL);
 

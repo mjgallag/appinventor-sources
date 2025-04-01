@@ -180,7 +180,7 @@ public class NewYoungAndroidProjectWizard {
     if (TextValidators.checkNewProjectName(projectName)
             == TextValidators.ProjectNameStatus.SUCCESS) {
       String packageName = StringUtils.getProjectPackage(
-          Ode.getInstance().getUser().getUserEmail(), projectName);
+          Ode.getInstance().getUser().email, projectName);
       NewYoungAndroidProjectParameters parameters = new NewYoungAndroidProjectParameters(
           packageName, theme.getValue(), toolkit.getValue());
       NewProjectWizard.NewProjectCommand callbackCommand = new NewProjectWizard.NewProjectCommand() {
