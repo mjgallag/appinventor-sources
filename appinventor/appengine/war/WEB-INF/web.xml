@@ -166,6 +166,34 @@
     <servlet-name>userInfoService</servlet-name>
   </filter-mapping>
 
+  <!-- /api/user/settings (userinfo) -->
+  <servlet>
+    <servlet-name>UserSettingsApi</servlet-name>
+    <servlet-class>com.google.appinventor.server.api.UserSettingsApi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserSettingsApi</servlet-name>
+    <url-pattern>/api/user/settings</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>odeAuthFilter</filter-name>
+    <servlet-name>UserSettingsApi</servlet-name>
+  </filter-mapping>
+
+  <!-- /api/user/system-config (userinfo) -->
+  <servlet>
+    <servlet-name>UserSystemConfigApi</servlet-name>
+    <servlet-class>com.google.appinventor.server.api.UserSystemConfigApi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserSystemConfigApi</servlet-name>
+    <url-pattern>/api/user/system-config</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>odeAuthFilter</filter-name>
+    <servlet-name>UserSystemConfigApi</servlet-name>
+  </filter-mapping>
+
   <!-- TokenAuth -->
   <servlet>
     <servlet-name>tokenAuthService</servlet-name>

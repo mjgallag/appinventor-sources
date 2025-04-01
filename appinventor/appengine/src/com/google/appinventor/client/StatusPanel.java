@@ -35,7 +35,7 @@ public class StatusPanel extends Composite {
   public StatusPanel() {
     bindUI();
 
-    String tosUrl = Ode.getSystemConfig().getTosUrl();
+    String tosUrl = Ode.getSystemConfig().tosUrl;
     if (!Strings.isNullOrEmpty(tosUrl)) {
       tosLink.setHref(tosUrl);
     } else {

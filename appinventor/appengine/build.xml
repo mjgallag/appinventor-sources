@@ -657,6 +657,7 @@
       <jvmarg value="-Dfile.encoding=UTF-8" />
       <arg value="-war"/>
       <arg value="${build.war.dir}"/>
+      <arg line="-generateJsInteropExports"/>
       <arg line="-logLevel INFO"/>
       <arg value="-extra"/>
       <arg value="${build.extra.dir}"/>

@@ -58,9 +58,9 @@ public class UserInfoServiceImpl extends OdeRemoteServiceServlet implements User
     storageIo.setUserSessionId(userInfoProvider.getUserId(), sessionId);
     Flag<String> rendezvousFlag = Flag.createFlag("use.rendezvousserver", "");
     if (!rendezvousFlag.get().equals("")) {
-      config.setRendezvousServer(rendezvousFlag.get());
+      config.rendezvousServer = rendezvousFlag.get();
     }
-    config.setUser(user);
+    config.user = user;
 
     String surveyUrl;
     if (AppInventorFeatures.doingSurvey()) {
@@ -70,32 +70,32 @@ public class UserInfoServiceImpl extends OdeRemoteServiceServlet implements User
     }
 
     // Fetch the current splash screen version
-    config.setSplashConfig(storageIo.getSplashConfig());
+    config.splashConfig = storageIo.getSplashConfig();
 
-    config.setLibraryUrl(Flag.createFlag("library.url", "").get());
-    config.setGetStartedUrl(Flag.createFlag("getstarted.url", "").get());
-    config.setExtensionsUrl(Flag.createFlag("extensions.url", "").get());
-    config.setTutorialsUrl(Flag.createFlag("tutorials.url", "").get());
-    config.setTroubleshootingUrl(Flag.createFlag("troubleshooting.url", "").get());
-    config.setForumsUrl(Flag.createFlag("forums.url", "").get());
-    config.setFeedbackUrl(Flag.createFlag("feedback.url", "").get());
-    config.setReleaseNotesUrl(Flag.createFlag("release.notes.url", "").get());
-    config.setTosUrl(Flag.createFlag("tos.url", "").get());
-    config.setLogoUrl(Flag.createFlag("logo.url", "").get());
-    config.setGuideUrl(Flag.createFlag("guide.url", "").get());
-    config.setReferenceComponentsUrl(Flag.createFlag("reference.components.url", "").get());
-    config.setFirebaseURL(Flag.createFlag("firebase.url", "").get());
-    config.setDefaultCloudDBserver(Flag.createFlag("clouddb.server", "").get());
-    config.setNoop(Flag.createFlag("session.noop", 0).get());
-    config.setGalleryEnabled(Flag.createFlag("gallery.enabled", false).get());
-    config.setGalleryReadOnly(Flag.createFlag("gallery.readonly", false).get());
-    config.setGalleryLocation(Flag.createFlag("gallery.location", "").get());
-    config.setDeleteAccountAllowed(deleteAccountAllowed);
-    config.setIosExtensions(storageIo.getIosExtensionsConfig());
-    config.setSurveyUrl(surveyUrl);
+    config.libraryUrl = Flag.createFlag("library.url", "").get();
+    config.getStartedUrl = Flag.createFlag("getstarted.url", "").get();
+    config.extensionsUrl = Flag.createFlag("extensions.url", "").get();
+    config.tutorialsUrl = Flag.createFlag("tutorials.url", "").get();
+    config.troubleshootingUrl = Flag.createFlag("troubleshooting.url", "").get();
+    config.forumsUrl = Flag.createFlag("forums.url", "").get();
+    config.feedbackUrl = Flag.createFlag("feedback.url", "").get();
+    config.releaseNotesUrl = Flag.createFlag("release.notes.url", "").get();
+    config.tosUrl = Flag.createFlag("tos.url", "").get();
+    config.logoUrl = Flag.createFlag("logo.url", "").get();
+    config.guideUrl = Flag.createFlag("guide.url", "").get();
+    config.referenceComponentsUrl = Flag.createFlag("reference.components.url", "").get();
+    config.firebaseURL = Flag.createFlag("firebase.url", "").get();
+    config.defaultCloudDBserver = Flag.createFlag("clouddb.server", "").get();
+    config.noop = Flag.createFlag("session.noop", 0).get();
+    config.galleryEnabled = Flag.createFlag("gallery.enabled", false).get();
+    config.galleryReadOnly = Flag.createFlag("gallery.readonly", false).get();
+    config.galleryLocation = Flag.createFlag("gallery.location", "").get();
+    config.deleteAccountAllowed = deleteAccountAllowed;
+    config.iosExtensions = storageIo.getIosExtensionsConfig();
+    config.surveyUrl = surveyUrl;
 
     if (!Flag.createFlag("build2.server.host", "").get().isEmpty()) {
-      config.setSecondBuildserver(true);
+      config.secondBuildserver = true;
     }
 
     String expirationDate = Flag.createFlag("service.expires.time", "").get();
@@ -103,7 +103,7 @@ public class UserInfoServiceImpl extends OdeRemoteServiceServlet implements User
       try {
         Date expires = ISO8601.parse(expirationDate);
         if (expires.before(new Date())) {
-          config.setServerExpired(true);
+          config.serverExpired = true;
         }
       } catch (ParseException e) {
         throw CrashReport.createAndLogError(LOG, null, null, e);
@@ -112,7 +112,7 @@ public class UserInfoServiceImpl extends OdeRemoteServiceServlet implements User
 
     // Fetch list of allowed tutorial prefixes from the data store
     List<String> urls = storageIo.getTutorialsUrlAllowed();
-    config.setTutorialUrlAllowed(urls);
+    config.tutorialUrlAllowed = urls.toArray(String[]::new);
 
     return config;
   }

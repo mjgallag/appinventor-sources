@@ -17,10 +17,10 @@ public class LocalUserInfoService implements UserInfoServiceAsync {
     Config config = new Config();
     User user = new User("1", "test@example.com", true, false, "1");
     user.setReadOnly(false);
-    config.setUser(user);
+    config.user = user;
     SplashConfig splashConfig = new SplashConfig(0, 0, 0, "");
-    config.setSplashConfig(splashConfig);
-    config.setIosExtensions("[]");
+    config.splashConfig = splashConfig;
+    config.iosExtensions = "[]";
     callback.onSuccess(config);
   }
 

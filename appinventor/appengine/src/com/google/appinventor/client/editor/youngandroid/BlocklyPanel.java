@@ -285,7 +285,7 @@ public class BlocklyPanel extends HTMLPanel {
   }
 
   public static boolean checkIsAdmin() {
-    return Ode.getInstance().getUser().getIsAdmin();
+    return Ode.getInstance().getUser().isAdmin;
   }
 
   // Set currentScreen

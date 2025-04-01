@@ -125,6 +125,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import java.util.Random;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -745,19 +746,25 @@ public class Ode implements EntryPoint {
     setupOrigin(adminInfoService);
     setupOrigin(tokenAuthService);
 
-    Promise.<Config>call(MESSAGES.serverUnavailable(),
-        c -> userInfoService.getSystemConfig(sessionId, c))
+    Promise.apiPatch(MESSAGES.serverUnavailable(),
+        "/api/user/system-config", 
+        ((Supplier<Config>) () -> {
+          final Config configPatch = new Config();
+          configPatch.user = new User(null, null, false, false, sessionId);
+          return configPatch;
+        }).get(),
+        Config.class)
         .then(result -> {
           config = result;
           // Before we get too far into it, let's see if we have to do a survey!
-          String surveyUrl = config.getSurveyUrl();
+          String surveyUrl = config.surveyUrl;
           if (surveyUrl != null && !surveyUrl.isEmpty()) {
             Window.Location.replace(Urls.makeUri(surveyUrl, true));
             // off we go, no returning
           }
-          user = result.getUser();
-          isReadOnly = user.isReadOnly();
-          registerIosExtensions(config.getIosExtensions());
+          user = result.user;
+          isReadOnly = user.isReadOnly;
+          registerIosExtensions(config.iosExtensions);
           return resolve(null);
         })
         .then0(this::handleGalleryId)
@@ -826,7 +833,7 @@ public class Ode implements EntryPoint {
     String galleryId = Window.Location.getParameter("galleryId");
     if (galleryId != null) {
       // This will replace us with the gallery server, displaying the app in question
-      Window.open(config.getGalleryLocation() + "?galleryid=" + galleryId, "_self", null);
+      Window.open(config.galleryLocation + "?galleryid=" + galleryId, "_self", null);
       // Never get here...(?)
       return reject(null);
     }
@@ -835,7 +842,7 @@ public class Ode implements EntryPoint {
 
   private Promise<Object> checkTos() {
     // If user hasn't accepted terms of service, ask them to.
-    if (!user.getUserTosAccepted() && !isReadOnly) {
+    if (!user.tosAccepted && !isReadOnly) {
       // We expect that the redirect to the TOS page should be handled
       // by the onFailure method below. The server should return a
       // "forbidden" error if the TOS wasn't accepted.
@@ -872,7 +879,7 @@ public class Ode implements EntryPoint {
   }
 
   private Promise<String> loadUserBackpack() {
-    String backPackId = user.getBackpackId();
+    String backPackId = user.backPackId;
     if (backPackId == null || backPackId.isEmpty()) {
       LOG.info("backpack: No shared backpack");
       return this.loadBackpack();
@@ -888,7 +895,7 @@ public class Ode implements EntryPoint {
     // backpack
 
     // Setup noop timer (if enabled)
-    int noop = config.getNoop();
+    int noop = config.noop;
     if (noop > 0) {
       // If we have a noop time, setup a timer to do the noop
       Timer t = new Timer() {
@@ -908,8 +915,8 @@ public class Ode implements EntryPoint {
       t.scheduleRepeating(1000 * 60 * noop);
     }
 
-    splashConfig = config.getSplashConfig();
-    secondBuildserver = config.getSecondBuildserver();
+    splashConfig = config.splashConfig;
+    secondBuildserver = config.secondBuildserver;
     // The code below is invoked if we do not have a second buildserver
     // configured. It sets the warnedBuild1 flag to true which inhibits
     // the display of the dialog box used when building. This means that
@@ -919,8 +926,8 @@ public class Ode implements EntryPoint {
       warnedBuild1 = true;
     }
 
-    if (config.getRendezvousServer() != null) {
-      setRendezvousServer(config.getRendezvousServer(), true);
+    if (config.rendezvousServer != null) {
+      setRendezvousServer(config.rendezvousServer, true);
     } else {
       setRendezvousServer(YaVersion.RENDEZVOUS_SERVER, false);
     }
@@ -985,7 +992,7 @@ public class Ode implements EntryPoint {
     Window.setTitle(MESSAGES.titleYoungAndroid());
     Window.enableScrolling(true);
 
-    if (config.getServerExpired()) {
+    if (config.serverExpired) {
       RootPanel.get().add(new ExpiredServiceOverlay());
     }
     LOG.info("Declare DeckPanel");
@@ -1085,7 +1092,7 @@ public class Ode implements EntryPoint {
 
     setupMotd();
     HTML5DragDrop.init();
-    topPanel.showUserEmail(user.getUserEmail());
+    topPanel.showUserEmail(user.email);
     return resolve(result);
   }
 
@@ -2141,7 +2148,7 @@ public class Ode implements EntryPoint {
     String [] fileParts = fileId.split("/");
     String screenNameParts = fileParts[fileParts.length - 1];
     final String screenName = screenNameParts.split("\\.")[0]; // Get rid of the .bky part
-    final String userEmail = user.getUserEmail();
+    final String userEmail = user.email;
     VerticalPanel DialogBoxContents = new VerticalPanel();
     HTML message = new HTML(MESSAGES.blocksTruncatedDialogMessage().replace("%1", screenName));
     message.setStyleName("DialogBox-message");
@@ -2506,7 +2513,7 @@ public class Ode implements EntryPoint {
     }
 
     boolean isUrlAllowed = false;
-    for (String candidate : config.getTutorialsUrlAllowed()) {
+    for (String candidate : config.tutorialUrlAllowed) {
       if (newURL.startsWith(candidate)) {
         isUrlAllowed = true;
         break;
@@ -2559,11 +2566,11 @@ public class Ode implements EntryPoint {
   }
 
   public boolean getGalleryReadOnly() {
-    return config.getGalleryReadOnly();
+    return config.galleryReadOnly;
   }
 
   public boolean getDeleteAccountAllowed() {
-    return config.getDeleteAccountAllowed();
+    return config.deleteAccountAllowed;
   }
 
   public static void setupOrigin(Object service) {

@@ -10,8 +10,8 @@ import static com.google.appinventor.client.Ode.MESSAGES;
 import static com.google.appinventor.client.utils.Promise.rejectWithReason;
 import static com.google.appinventor.client.utils.Promise.resolve;
 
+import com.google.appinventor.client.Api;
 import com.google.appinventor.client.Ode;
-import com.google.appinventor.client.OdeAsyncCallback;
 import com.google.appinventor.client.settings.CommonSettings;
 import com.google.appinventor.client.settings.SettingsAccessProvider;
 import com.google.appinventor.client.utils.Promise;
@@ -46,8 +46,8 @@ public final class UserSettings extends CommonSettings
 
   @Override
   public Promise<UserSettings> loadSettings() {
-    return Promise.call(MESSAGES.settingsLoadError(),
-        Ode.getInstance().getUserInfoService()::loadUserSettings)
+    return Promise.apiGet(MESSAGES.settingsLoadError(),
+        "/api/user/settings", String.class)
         .then(result -> {
           LOG.info("Loaded global settings: " + result);
           decodeSettings(result);
@@ -92,9 +92,10 @@ public final class UserSettings extends CommonSettings
     } else {
       String s = encodeSettings();
       LOG.info("Saving global settings: " + s);
-      Ode.getInstance().getUserInfoService().storeUserSettings(
+      Api.put("/api/user/settings",
           s,
-          new OdeAsyncCallback<Void>(
+          Void.class,
+          new Api.AsyncCallback<Void>(
               // failure message
               MESSAGES.settingsSaveError()) {
             @Override

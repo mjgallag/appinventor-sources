@@ -38,12 +38,12 @@ public class AboutAction implements Command {
     String html = MESSAGES.gitBuildId(GitBuildId.getDate(), GitBuildId.getVersion()) +
         "<BR/>Use Companion: " + BlocklyPanel.getCompVersion();
     Config config = Ode.getInstance().getSystemConfig();
-    String releaseNotesUrl = config.getReleaseNotesUrl();
+    String releaseNotesUrl = config.releaseNotesUrl;
     if (!Strings.isNullOrEmpty(releaseNotesUrl)) {
       html += "<BR/><BR/>Please see <a href=\"" + releaseNotesUrl +
           "\" target=\"_blank\">release notes</a>";
     }
-    String tosUrl = config.getTosUrl();
+    String tosUrl = config.tosUrl;
     if (!Strings.isNullOrEmpty(tosUrl)) {
       html += "<BR/><BR/><a href=\"" + tosUrl +
           "\" target=\"_blank\">" + MESSAGES.privacyTermsLink() + "</a>";

@@ -105,7 +105,7 @@ public class TopPanel extends Composite {
      */
     bindUI();
     Config config = getSystemConfig();
-    String logoUrl = config.getLogoUrl();
+    String logoUrl = config.logoUrl;
 
 
     if (!Strings.isNullOrEmpty(logoUrl)) {

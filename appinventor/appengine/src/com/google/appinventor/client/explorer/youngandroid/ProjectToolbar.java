@@ -51,7 +51,7 @@ public class ProjectToolbar extends Toolbar {
     isReadOnly = Ode.getInstance().isReadOnly();
     isGalleryReadyOnly = Ode.getInstance().getGalleryReadOnly();
     // Is the new gallery enabled
-    galleryEnabled = Ode.getSystemConfig().getGalleryEnabled();
+    galleryEnabled = Ode.getSystemConfig().galleryEnabled;
     bindProjectToolbar();
     if (galleryEnabled) {
       setButtonVisible(WIDGET_NAME_LOGINTOGALLERY, true);

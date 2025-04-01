@@ -7,6 +7,7 @@
 package com.google.appinventor.shared.rpc.user;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import jsinterop.annotations.JsProperty;
 import java.io.Serializable;
 
 /**
@@ -15,29 +16,37 @@ import java.io.Serializable;
  */
 public class User implements IsSerializable, UserInfoProvider, Serializable {
   // Unique identifier for the user
-  private String id;
+  @JsProperty
+  public String id;
 
   // user email address
-  private String email;
+  @JsProperty
+  public String email;
 
   // whether user has accepted terms of service
-  private boolean tosAccepted;
+  @JsProperty
+  public boolean tosAccepted;
 
   // whether the user has admin priviledges
-  private boolean isAdmin;
+  @JsProperty
+  public boolean isAdmin;
 
   // If set, we inform the client side to go into read only mode
   // NOTE: isReadOnly is *not* enforced on the server. This is because
   // only privileged users can assert isReadOnly and we assume that they
   // are sufficiently trustworthy that they will not attempt to abuse the
   // system by unsetting it on their client to cause mischief
-  private boolean isReadOnly;
+  @JsProperty
+  public boolean isReadOnly;
 
-  private String sessionId;        // Used to ensure only one account active at a time
+  @JsProperty
+  public String sessionId;        // Used to ensure only one account active at a time
 
-  private String password;      // Hashed password (if using local login system)
+  @JsProperty
+  public String password;      // Hashed password (if using local login system)
 
-  private String backPackId = null; // If non-null we have a shared backpack
+  @JsProperty
+  public String backPackId = null; // If non-null we have a shared backpack
 
   public final static String usercachekey = "f682688a-1065-4cda-8515-a8bd70200ac9"; // UUID
   // This UUID is prepended to any key lookup for User objects. Memcache is a common

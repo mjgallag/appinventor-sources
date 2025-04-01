@@ -5,6 +5,7 @@
 
 package com.google.appinventor.client.utils;
 
+import com.google.appinventor.client.Api;
 import com.google.appinventor.client.Ode;
 import com.google.appinventor.client.OdeAsyncCallback;
 import com.google.gwt.core.client.JsArray;
@@ -158,6 +159,25 @@ public class Promise<T> {
     }
   }
 
+  private static class ApiCallbackProxy<T> extends Api.AsyncCallback<T> {
+    private ResolveCallback<T> resolve;
+    private RejectCallback reject;
+
+    ApiCallbackProxy(String message) {
+      super(message);
+    }
+
+    @Override
+    public void onFailure(Throwable caught) {
+      reject.apply(new WrappedException(caught));
+    }
+
+    @Override
+    public void onSuccess(T result) {
+      resolve.apply(result);
+    }
+  }
+
   /**
    * Constructs a new JavaScript Promise. The resolve and return callbacks will
    * be passed to the function <code>promised</code>. Note that the body is
@@ -188,6 +208,27 @@ public class Promise<T> {
       callback.resolve = resolve;
       callback.reject = reject;
       consumer.accept(callback);
+    });
+  }
+
+  @JsOverlay
+  public static <T> Promise<T> apiGet(String errorMessage, String url, Class<T> respClass) {
+    final ApiCallbackProxy<T> callback = new ApiCallbackProxy<>(errorMessage);
+    return new Promise<>((resolve, reject) -> {
+      callback.resolve = resolve;
+      callback.reject = reject;
+      Api.get(url, respClass, callback);
+    });
+  }
+
+  @JsOverlay
+  public static <T> Promise<T> apiPatch(String errorMessage, String url, Object reqObj,
+      Class<T> respClass) {
+    final ApiCallbackProxy<T> callback = new ApiCallbackProxy<>(errorMessage);
+    return new Promise<>((resolve, reject) -> {
+      callback.resolve = resolve;
+      callback.reject = reject;
+      Api.patch(url, reqObj, respClass, callback);
     });
   }
 

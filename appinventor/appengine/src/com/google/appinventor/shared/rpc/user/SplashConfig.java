@@ -7,6 +7,7 @@
 package com.google.appinventor.shared.rpc.user;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import jsinterop.annotations.JsProperty;
 import java.io.Serializable;
 
 /**
@@ -27,8 +28,12 @@ public class SplashConfig implements IsSerializable, Serializable {
       this.content = content;
     }
 
+    @JsProperty
     public int version;
+    @JsProperty
     public int height;
+    @JsProperty
     public int width;
+    @JsProperty
     public String content;
 }

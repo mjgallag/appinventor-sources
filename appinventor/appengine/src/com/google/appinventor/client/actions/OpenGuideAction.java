@@ -17,8 +17,8 @@ public class OpenGuideAction implements Command {
   @Override
   public void execute() {
     Config config = getSystemConfig();
-    if (config.getGuideUrl() != null) {
-      Window.open(config.getGuideUrl(), TopPanel.WINDOW_OPEN_LOCATION, TopPanel.WINDOW_OPEN_FEATURES);
+    if (config.guideUrl != null) {
+      Window.open(config.guideUrl, TopPanel.WINDOW_OPEN_LOCATION, TopPanel.WINDOW_OPEN_FEATURES);
     }
   }
 }
