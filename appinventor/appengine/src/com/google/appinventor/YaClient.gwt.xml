@@ -207,6 +207,11 @@
   <define-property name="rest" values="false,true"/>
   <set-property name="rest" value="false"/>
 
+  <replace-with class="com.google.appinventor.client.rest.ProjectsRestService">
+    <when-type-is class="com.google.appinventor.shared.rpc.project.ProjectService"/>
+    <when-property-is name="rest" value="true"/>
+  </replace-with>
+
   <replace-with class="com.google.appinventor.client.rest.UserRestService">
     <when-type-is class="com.google.appinventor.shared.rpc.user.UserInfoService"/>
     <when-property-is name="rest" value="true"/>

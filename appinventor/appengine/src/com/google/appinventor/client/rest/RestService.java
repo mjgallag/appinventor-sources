@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import com.google.appinventor.shared.rpc.project.UserProject;
 import com.google.appinventor.shared.rpc.user.Config;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -23,6 +24,7 @@ public abstract class RestService {
   protected static final String REST_BASE = "/rest/v1";
   private static final Map<Class<?>, ResponseParser> RESPONSE_PARSERS = new HashMap<>();
   static {
+    RESPONSE_PARSERS.put(UserProject.class, (json) -> new UserProject(json));
     RESPONSE_PARSERS.put(Config.class, (json) -> new Config(json));
   }
 

@@ -123,6 +123,48 @@
     <servlet-name>projectService</servlet-name>
   </filter-mapping>
 
+  <!-- /rest/v1/projects -->
+  <servlet>
+    <servlet-name>projectsRestServlet</servlet-name>
+    <servlet-class>com.google.appinventor.server.rest.projects.ProjectsRestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>projectsRestServlet</servlet-name>
+    <url-pattern>/rest/v1/projects</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>odeAuthFilter</filter-name>
+    <servlet-name>projectsRestServlet</servlet-name>
+  </filter-mapping>
+
+  <!-- /rest/v1/projects/* -->
+  <servlet>
+    <servlet-name>projectRestServlet</servlet-name>
+    <servlet-class>com.google.appinventor.server.rest.projects.ProjectRestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>projectRestServlet</servlet-name>
+    <url-pattern>/rest/v1/projects/*</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>odeAuthFilter</filter-name>
+    <servlet-name>projectRestServlet</servlet-name>
+  </filter-mapping>
+
+  <!-- /rest/v1/projects/templates/* -->
+  <servlet>
+    <servlet-name>projectTemplatesRestServlet</servlet-name>
+    <servlet-class>com.google.appinventor.server.rest.projects.ProjectsTemplatesRestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>projectTemplatesRestServlet</servlet-name>
+    <url-pattern>/rest/v1/projects/templates/*</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>odeAuthFilter</filter-name>
+    <servlet-name>projectTemplatesRestServlet</servlet-name>
+  </filter-mapping>
+
   <!-- upload -->
   <servlet>
     <servlet-name>uploadServlet</servlet-name>

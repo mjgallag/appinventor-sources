@@ -7,13 +7,15 @@
 package com.google.appinventor.shared.rpc.project;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.google.appinventor.shared.rpc.RestJSONObject;
+import jsinterop.annotations.JsProperty;
 
 /**
  * Bundles user specific information about a project to send it over an RPC.
  *
  * @author lizlooney@google.com (Liz Looney)
  */
-public class UserProject implements IsSerializable {
+public class UserProject extends RestJSONObject implements IsSerializable {
   /**
    * The project's ID.
    */
@@ -104,6 +106,10 @@ public class UserProject implements IsSerializable {
     this.buildDate = buildDate;
   }
 
+  public UserProject(Object json) {
+    super(json);
+  }
+
   /**
    * Returns the project ID.
    *
@@ -113,13 +119,29 @@ public class UserProject implements IsSerializable {
     return projectId;
   }
 
+  @JsProperty(name = "projectId")
+  public double getProjectIdDouble() {
+    return (double) getProjectId();
+  }
+
+  @JsProperty(name = "projectId")
+  public void setProjectIdDouble(double projectId) {
+    this.projectId = (long) projectId;
+  }
+
   /**
    * Returns the project name.
    *
    * @return the projectName
    */
+  @JsProperty
   public String getProjectName() {
     return projectName;
+  }
+
+  @JsProperty
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
   }
 
   /**
@@ -127,12 +149,28 @@ public class UserProject implements IsSerializable {
    *
    * @return the projectType
    */
+  @JsProperty
   public String getProjectType() {
     return projectType;
   }
 
+  @JsProperty
+  public void setProjectType(String projectType) {
+    this.projectType = projectType;
+  }
+
   public long getDateCreated() {
     return creationDate;
+  }
+
+  @JsProperty(name = "creationDate")
+  public double getDateCreatedDouble() {
+    return (double) getDateCreated();
+  }
+
+  @JsProperty(name = "creationDate")
+  public void setDateCreatedDouble(double creationDate) {
+    this.creationDate = (long) creationDate;
   }
 
   public long getDateModified() {
@@ -145,6 +183,16 @@ public class UserProject implements IsSerializable {
     }
   }
 
+  @JsProperty(name = "modificationDate")
+  public double getDateModifiedDouble() {
+    return (double) getDateModified();
+  }
+
+  @JsProperty(name = "modificationDate")
+  public void setDateModifiedDouble(double modificationDate) {
+    setDateModified((long) modificationDate);
+  }
+
   public long getDateBuilt() {
     return buildDate;
   }
@@ -155,6 +203,16 @@ public class UserProject implements IsSerializable {
     }
   }
 
+  @JsProperty(name = "buildDate")
+  public double getDateBuiltDouble() {
+    return (double) getDateBuilt();
+  }
+
+  @JsProperty(name = "buildDate")
+  public void setDateBuiltDouble(double buildDate) {
+    setDateBuilt((long) buildDate);
+  }
+
   public void moveToTrash() {
     this.projectMovedToTrashFlag = true;
   }
@@ -163,8 +221,14 @@ public class UserProject implements IsSerializable {
     this.projectMovedToTrashFlag = false;
   }
 
+  @JsProperty(name = "projectMovedToTrashFlag")
   public boolean isInTrash() {
     return projectMovedToTrashFlag;
+  }
+
+  @JsProperty(name = "projectMovedToTrashFlag")
+  public void setIsInTrash(boolean isInTrash) {
+    this.projectMovedToTrashFlag = isInTrash;
   }
 
   @Override

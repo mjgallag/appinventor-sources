@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appinventor.server.ProjectServiceImpl;
 import com.google.appinventor.server.UserInfoServiceImpl;
 import com.google.appinventor.server.util.CacheHeaders;
 import com.google.appinventor.server.util.CacheHeadersImpl;
@@ -16,6 +17,7 @@ import com.google.gson.Gson;
 public abstract class RestServlet extends HttpServlet {
   private static final CacheHeaders CACHE_HEADERS = new CacheHeadersImpl();
   private static final Gson GSON = new Gson();
+  protected static final ProjectServiceImpl PROJECT_SERVICE = new ProjectServiceImpl();
   protected static final UserInfoServiceImpl USER_INFO_SERVICE = new UserInfoServiceImpl();
 
   @Override
